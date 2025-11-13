@@ -28,7 +28,7 @@
         const [file] = event.target.targetFileInput.files
         const fd = new FormData(event.target)
         fd.append('targetFile', file)
-        const requestBlob = await fetch('/convert', {
+        const requestBlob = await fetch('/api/v1/resize?width=50&height=50', {
           method: 'POST',
           body: fd,
         })
