@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatRippleModule } from '@angular/material/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import {MatSelectModule} from '@angular/material/select'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import {MatSidenavModule} from '@angular/material/sidenav'
 import {MatButtonToggleModule} from '@angular/material/button-toggle'
@@ -30,7 +31,8 @@ import {MatSnackBar} from '@angular/material/snack-bar'
     MatSlideToggleModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './imageeditor.html',
   styleUrl: './imageeditor.css',
@@ -79,6 +81,7 @@ export class Imageeditor  {
     input.accept = 'image/*'
     input.addEventListener('change', () => {
       const file = input.files?.[0]
+      // this.form.get('convertTo')?.setValue(file?.type.replace('image/', ''))
       if (file) {
         this.localImage.set(file)
       }
@@ -87,6 +90,16 @@ export class Imageeditor  {
     })
     input.click()
   }
+
+  public saveFile(blob: Blob | undefined) {
+    if (!blob) return
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = a.href
+    a.click()
+    URL.revokeObjectURL(a.href)
+  }
+
 
   constructor() {
     const formValue = toSignal(this.form.valueChanges, {

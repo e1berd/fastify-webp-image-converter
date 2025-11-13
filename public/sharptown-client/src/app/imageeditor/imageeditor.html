@@ -4,8 +4,6 @@
   <mat-drawer [(opened)]="isOpenSettingsDrawer" mode="side">
     <form [formGroup]="form" class="pt-6 flex flex-col gap-y-4 px-4">
 
-      <mat-slide-toggle formControlName="flip">flip</mat-slide-toggle>
-
       <div class="flex gap-x-4">
         <mat-form-field class="example-full-width">
           <mat-label>Width</mat-label>
@@ -51,44 +49,46 @@
          </mat-form-field>
        </div>
 
-       <!-- Boolean toggles -->
-       <mat-button-toggle-group formControlName="removeAlpha">
-         <mat-button-toggle [value]="true">Remove Alpha</mat-button-toggle>
-         <mat-button-toggle [value]="false">No</mat-button-toggle>
-       </mat-button-toggle-group>
+       <mat-slide-toggle formControlName="flip">flip</mat-slide-toggle>
+       <mat-slide-toggle formControlName="removeAlpha">remove alpha</mat-slide-toggle>
+       <mat-slide-toggle formControlName="ensureAlpha">ensure alpha</mat-slide-toggle>
 
-       <mat-button-toggle-group formControlName="ensureAlpha">
-         <mat-button-toggle [value]="true">Ensure Alpha</mat-button-toggle>
-         <mat-button-toggle [value]="false">No</mat-button-toggle>
-       </mat-button-toggle-group>
 
-       <!-- Convert to -->
        <mat-form-field>
          <mat-label>Convert To</mat-label>
-         <select matNativeControl formControlName="convertTo">
-           <option [ngValue]="undefined">original</option>
-           <option value="png">png</option>
-           <option value="jpg">jpg</option>
-           <option value="jpeg">jpeg</option>
-           <option value="webp">webp</option>
-           <option value="avif">avif</option>
-           <option value="gif">gif</option>
-           <option value="heif">heif</option>
-         </select>
+         <mat-select  formControlName="convertTo">
+           <mat-option value="png">png</mat-option>
+           <mat-option value="jpg">jpg</mat-option>
+           <mat-option value="jpeg">jpeg</mat-option>
+           <mat-option value="webp">webp</mat-option>
+           <mat-option value="avif">avif</mat-option>
+           <mat-option value="gif">gif</mat-option>
+           <mat-option value="heif">heif</mat-option>
+         </mat-select>
        </mat-form-field>
 
      </form>
   </mat-drawer>
   <mat-drawer-content>
     <div class="grid gap-y-2">
-      <button
-        matIconButton
-        matTooltip="Open settings"
-        (click)="isOpenSettingsDrawer = !isOpenSettingsDrawer"
-        [disabled]="isLoadingRemoteImage() || !remoteImage()"
-      >
-        <mat-icon fontIcon="arrow_right_alt"></mat-icon>
-      </button>
+      <div class="flex">
+        <button
+          matIconButton
+          matTooltip="Open settings"
+          (click)="isOpenSettingsDrawer = !isOpenSettingsDrawer"
+          [disabled]="isLoadingRemoteImage() || !remoteImage()"
+        >
+          <mat-icon fontIcon="arrow_right_alt"></mat-icon>
+        </button>
+        <button
+          matIconButton
+          matTooltip="Open settings"
+          (click)="saveFile(remoteImage())"
+          [disabled]="isLoadingRemoteImage() || !remoteImage()"
+        >
+          <mat-icon fontIcon="save"></mat-icon>
+        </button>
+      </div>
       <div class="border border-(--mat-sys-outline-variant) flex rounded-xl my-auto h-[calc(100vh_-_var(--spacing)*15)] w-full overflow-hidden">
 
         <div
