@@ -1,5 +1,6 @@
 import sharp from 'sharp'
 import { extractFilesFromRequest } from './extractFilesFromRequest.mjs'
+import { SUPPORTED_FORMATS } from './convert.mjs'
 
 export async function transform(request, reply) {
   let {
@@ -14,13 +15,17 @@ export async function transform(request, reply) {
      grayscale,
      greyscale,
      removeAlpha,
-     ensureAlpha
-   } = req.query
+     ensureAlpha,
+     convertTo
+   } = request.query
 
-  grayscale || = greyscale
+  grayscale ||= greyscale
 
   const [file] = await extractFilesFromRequest(request)
-  let image = sharp(file)
+  if (!file) {
+    return reply.status(400).send({ error: 'No files found' })
+  }
+  let image = sharp(file.content)
 
   if (removeAlpha === 'true') {
     image = image.removeAlpha()
@@ -128,6 +133,13 @@ export async function transform(request, reply) {
       resizeOptions.height = height
     }
     image = image.resize(resizeOptions)
+  }
+
+  if (convertTo) {
+    if (!SUPPORTED_FORMATS.includes(convertTo)) {
+      return reply.status(400).send('Invalid convert format target')
+    }
+    image = image.toFormat(convertTo)
   }
 
   return image.toBuffer()

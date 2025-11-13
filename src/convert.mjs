@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { extractFilesFromRequest } from './extractFilesFromRequest.mjs'
 
-const SUPPORTED_FORMATS = Object.freeze(['webp', 'png', 'jpg', 'jpeg', 'avif', 'gif', 'heif'])
+export const SUPPORTED_FORMATS = Object.freeze(['webp', 'png', 'jpg', 'jpeg', 'avif', 'gif', 'heif'])
 
 export async function convert(request, reply) {
 

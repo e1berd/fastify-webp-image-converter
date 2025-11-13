@@ -1,16 +1,138 @@
 
-<div>
-  <div class="flex gap-4">
-    <button matButton>
-      <span class="truncate">Upload image</span>
-    </button>
-    <div class="flex gap-1">
-      <mat-card appearance="outlined">
-        <img mat-card-image src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      </mat-card>
-      <mat-card appearance="outlined">
-        <img mat-card-image src="https://material.angular.dev/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      </mat-card>
+
+<mat-drawer-container class="example-container">
+  <mat-drawer [(opened)]="isOpenSettingsDrawer" mode="side">
+    <form [formGroup]="form" class="pt-6 flex flex-col gap-y-4 px-4">
+
+      <mat-slide-toggle formControlName="flip">flip</mat-slide-toggle>
+
+      <div class="flex gap-x-4">
+        <mat-form-field class="example-full-width">
+          <mat-label>Width</mat-label>
+          <input matInput type="number" formControlName="width">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Height</mat-label>
+          <input matInput type="number" formControlName="height">
+        </mat-form-field>
+      </div>
+
+       <mat-form-field class="example-full-width">
+         <mat-label>Rotate</mat-label>
+         <input matInput type="number" formControlName="rotate">
+       </mat-form-field>
+
+       <mat-form-field class="example-full-width">
+         <mat-label>Blur</mat-label>
+         <input matInput type="number" formControlName="blur">
+       </mat-form-field>
+
+       <mat-form-field class="example-full-width">
+         <mat-label>Grayscale</mat-label>
+         <input matInput type="number" min="0" max="100" formControlName="grayscale">
+       </mat-form-field>
+
+       <!-- RGB -->
+       <div class="grid grid-cols-3 gap-4">
+         <mat-form-field>
+           <mat-label>Red</mat-label>
+           <input matInput type="number" formControlName="red">
+         </mat-form-field>
+
+         <mat-form-field>
+           <mat-label>Green</mat-label>
+           <input matInput type="number" formControlName="green">
+         </mat-form-field>
+
+         <mat-form-field>
+           <mat-label>Blue</mat-label>
+           <input matInput type="number" formControlName="blue">
+         </mat-form-field>
+       </div>
+
+       <!-- Boolean toggles -->
+       <mat-button-toggle-group formControlName="removeAlpha">
+         <mat-button-toggle [value]="true">Remove Alpha</mat-button-toggle>
+         <mat-button-toggle [value]="false">No</mat-button-toggle>
+       </mat-button-toggle-group>
+
+       <mat-button-toggle-group formControlName="ensureAlpha">
+         <mat-button-toggle [value]="true">Ensure Alpha</mat-button-toggle>
+         <mat-button-toggle [value]="false">No</mat-button-toggle>
+       </mat-button-toggle-group>
+
+       <!-- Convert to -->
+       <mat-form-field>
+         <mat-label>Convert To</mat-label>
+         <select matNativeControl formControlName="convertTo">
+           <option [ngValue]="undefined">original</option>
+           <option value="png">png</option>
+           <option value="jpg">jpg</option>
+           <option value="jpeg">jpeg</option>
+           <option value="webp">webp</option>
+           <option value="avif">avif</option>
+           <option value="gif">gif</option>
+           <option value="heif">heif</option>
+         </select>
+       </mat-form-field>
+
+     </form>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="grid gap-y-2">
+      <button
+        matIconButton
+        matTooltip="Open settings"
+        (click)="isOpenSettingsDrawer = !isOpenSettingsDrawer"
+        [disabled]="isLoadingRemoteImage() || !remoteImage()"
+      >
+        <mat-icon fontIcon="arrow_right_alt"></mat-icon>
+      </button>
+      <div class="border border-(--mat-sys-outline-variant) flex rounded-xl my-auto h-[calc(100vh_-_var(--spacing)*15)] w-full overflow-hidden">
+
+        <div
+          matRipple
+          [matRippleTrigger]="trigger"
+          class="size-full"
+          matTooltip="Click to upload file"
+          (click)="uploadFile()"
+        >
+          <div #trigger class="size-full border-r border-(--mat-sys-outline-variant) flex justify-center items-center overflow-hidden object-cover">
+            @if (localImage()) {
+            <div class="min-w-fit">
+              <img [src]="localImageUrl()" class="min-size-full" alt="Local Image Preview">
+            </div>
+            } @else if (isLoadingRemoteImage()) {
+              <mat-spinner></mat-spinner>
+            } @else {
+              <mat-icon
+                aria-hidden="false"
+                aria-label="attach file icon"
+                fontIcon="attach_file"
+              />
+            }
+          </div>
+        </div>
+
+
+
+          <div class="size-full" matTooltip="Upload file" class="size-full overflow-hidden object-cover flex items-center justify-center" matTooltip="Preview transformed file">
+            @if (remoteImage()) {
+
+            <div class="min-w-fit">
+              <img [src]="remoteImageUrl()" alt="Remote Image Preview" class="min-size-full">
+            </div>
+            } @else {
+              <mat-icon
+                aria-hidden="false"
+                aria-label="preview icon"
+                fontIcon="preview"
+              />
+            }
+          </div>
+
+      </div>
     </div>
-  </div>
-</div>
+  </mat-drawer-content>
+</mat-drawer-container>

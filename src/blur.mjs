@@ -3,7 +3,7 @@ import sharp from 'sharp'
 import { extractFilesFromRequest } from './extractFilesFromRequest.mjs'
 
 
-export async function flip(request, reply) {
+export async function blur(request, reply) {
   const [file] = await extractFilesFromRequest(request)
 
   let { sigma = undefined } = request.query

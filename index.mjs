@@ -22,6 +22,7 @@ const app = Fastify({
 })
 
 app
+.register(import('@fastify/cors'), { origin: '*' })
 .register(import('@mgcrea/fastify-request-logger'))
 .register(import('@fastify/multipart'))
 .register(import('@fastify/static'), {
