@@ -31,7 +31,6 @@
          <input matInput type="number" min="0" max="100" formControlName="grayscale">
        </mat-form-field>
 
-       <!-- RGB -->
        <div class="grid grid-cols-3 gap-4">
          <mat-form-field>
            <mat-label>Red</mat-label>
@@ -82,7 +81,7 @@
         </button>
         <button
           matIconButton
-          matTooltip="Open settings"
+          matTooltip="Save preview image"
           (click)="saveFile(remoteImage())"
           [disabled]="isLoadingRemoteImage() || !remoteImage()"
         >
