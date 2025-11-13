@@ -114,7 +114,7 @@ export class Imageeditor  {
         const fd = new FormData()
         fd.append('file', this.localImage() as Blob)
         this.isLoadingRemoteImage.set(true)
-        const url = new URL('http://localhost:3001/api/v1/transform')
+        const url = new URL('/api/v1/transform', window.location.origin)
 
         if (currentForm.flip) url.searchParams.set('flip', 'true')
         if (currentForm.width) url.searchParams.set('width', String(currentForm.width))

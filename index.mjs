@@ -31,7 +31,7 @@ app
 .register(import('./src/plugin.mjs'))
 .get('/', function(req, res) {
   res.header('content-type', 'text/html')
-  return readFile('./public/sharptown-client/dist/browser/index.html', 'utf-8')
+  return readFile('./public/index.html', 'utf-8')
 })
 .listen({ port, host })
 .catch(err => {
