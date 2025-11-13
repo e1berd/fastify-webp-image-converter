@@ -7,23 +7,26 @@ import { tint } from './tint.mjs'
 import { greyscale } from './greyscale.mjs'
 import { removeAlpha } from './removeAlpha.mjs'
 import { ensureAlpha } from './ensureAlpha.mjs'
+import { transform } from './transform.mjs'
 
 /**
  * @param {import('fastify').FastifyInstance} app
 */
-export default function any2webpConverterPlugin(app, { apiPrefix = '/api/v1/' } = {}, done) {
-  const normalizedApiPrefix = apiPrefix.endsWith('/') ? apiPrefix : apiPrefix + '/'
+export default function any2webpConverterPlugin(app, {}, done) {
+  const apiPrefix = '/api/v1/'
 
-  app.post(normalizedApiPrefix + 'convert', convert)
-  app.post(normalizedApiPrefix + 'resize', resize)
-  app.post(normalizedApiPrefix + 'rotate', rotate)
-  app.post(normalizedApiPrefix + 'flip', flip)
-  app.post(normalizedApiPrefix + 'blur', blur)
-  app.post(normalizedApiPrefix + 'tint', tint)
-  app.post(normalizedApiPrefix + 'greyscale', greyscale)
-  app.post(normalizedApiPrefix + 'grayscale', greyscale)
-  app.post(normalizedApiPrefix + 'remove-alpha', removeAlpha)
-  app.post(normalizedApiPrefix + 'ensure-alpha', ensureAlpha)
+  app.post(apiPrefix + 'convert', convert)
+  app.post(apiPrefix + 'resize', resize)
+  app.post(apiPrefix + 'rotate', rotate)
+  app.post(apiPrefix + 'flip', flip)
+  app.post(apiPrefix + 'blur', blur)
+  app.post(apiPrefix + 'tint', tint)
+  app.post(apiPrefix + 'greyscale', greyscale)
+  app.post(apiPrefix + 'grayscale', greyscale)
+  app.post(apiPrefix + 'remove-alpha', removeAlpha)
+  app.post(apiPrefix + 'ensure-alpha', ensureAlpha)
+
+  app.post(apiPrefix + 'transform', transform)
 
   done()
 }

@@ -3,8 +3,8 @@ import { env } from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { readFile } from 'node:fs/promises'
 
-const port = parseInt(env.PORT || '3001')
-const host = env.HOST || '0.0.0.0'
+const port = parseInt(env.SHARPTOWN_PORT || '3001')
+const host = env.SHARPTOWN_HOST || '0.0.0.0'
 
 const app = Fastify({
   logger: {
@@ -30,7 +30,7 @@ app
 .register(import('./src/plugin.mjs'))
 .get('/', function(req, res) {
   res.header('content-type', 'text/html')
-  return readFile('./public/client.html', 'utf-8')
+  return readFile('./public/sharptown-client/dist/browser/index.html', 'utf-8')
 })
 .listen({ port, host })
 .catch(err => {

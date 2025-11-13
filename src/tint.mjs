@@ -13,6 +13,28 @@ export async function tint(request, reply) {
     return
   }
 
+
+  try {
+    r = parseInt(r)
+  } catch(error) {
+    reply.status(400).send({ error: 'Invalid red color value' })
+    return
+  }
+
+  try {
+    g = parseInt(g)
+  } catch(error) {
+    reply.status(400).send({ error: 'Invalid green color value' })
+    return
+  }
+
+  try {
+    b = parseInt(b)
+  } catch(error) {
+    reply.status(400).send({ error: 'Invalid blue color value' })
+    return
+  }
+
   if (r > 255) {
     reply.status(400).send({ error: 'Invalid red color value' })
     return
