@@ -59,3 +59,8 @@ DEFAULT_QUALITY=85
     Push to branch (git push origin feature/amazing-feature)
 
     Open a Pull Request
+
+
+### Todo
+- add quality parameter
+- design new doc with astro and startlight
